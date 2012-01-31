@@ -79,6 +79,7 @@
     </Compile>
     <Compile Include="Libraries\Crc32.cs" />
     <Compile Include="Libraries\RomManagementTools.cs" />
+    <Compile Include="Libraries\INIFile.cs" />
     <Compile Include="Model\Game.cs" />
     <Compile Include="Model\GameLib.cs" />
     <Compile Include="Libraries\Win32Utility.cs" />

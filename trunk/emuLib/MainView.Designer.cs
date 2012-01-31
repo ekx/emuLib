@@ -61,10 +61,10 @@
             this.boxArt = new System.Windows.Forms.PictureBox();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.descriptionBox = new System.Windows.Forms.TextBox();
-            this.saveTable = new BrightIdeasSoftware.ObjectListView();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.loadButton = new System.Windows.Forms.Button();
+            this.saveTable = new BrightIdeasSoftware.ObjectListView();
             ((System.ComponentModel.ISupportInitialize)(this.libTable)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.menuStrip.SuspendLayout();
@@ -97,6 +97,7 @@
             this.libTable.Location = new System.Drawing.Point(0, 27);
             this.libTable.MultiSelect = false;
             this.libTable.Name = "libTable";
+            this.libTable.OwnerDraw = true;
             this.libTable.ShowGroups = false;
             this.libTable.Size = new System.Drawing.Size(928, 720);
             this.libTable.TabIndex = 2;
@@ -398,18 +399,6 @@
             this.tabPage3.Text = "Description";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.loadButton);
-            this.tabPage4.Controls.Add(this.saveTable);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(307, 341);
-            this.tabPage4.TabIndex = 1;
-            this.tabPage4.Text = "Savestates";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
             // descriptionBox
             // 
             this.descriptionBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -424,17 +413,17 @@
             this.descriptionBox.Size = new System.Drawing.Size(295, 300);
             this.descriptionBox.TabIndex = 13;
             // 
-            // saveTable
+            // tabPage4
             // 
-            this.saveTable.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.saveTable.Location = new System.Drawing.Point(6, 6);
-            this.saveTable.Name = "saveTable";
-            this.saveTable.Size = new System.Drawing.Size(295, 300);
-            this.saveTable.TabIndex = 0;
-            this.saveTable.UseCompatibleStateImageBehavior = false;
-            this.saveTable.View = System.Windows.Forms.View.Details;
+            this.tabPage4.Controls.Add(this.loadButton);
+            this.tabPage4.Controls.Add(this.saveTable);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(307, 341);
+            this.tabPage4.TabIndex = 1;
+            this.tabPage4.Text = "Savestates";
+            this.tabPage4.UseVisualStyleBackColor = true;
             // 
             // loadButton
             // 
@@ -446,6 +435,18 @@
             this.loadButton.TabIndex = 1;
             this.loadButton.Text = "Load";
             this.loadButton.UseVisualStyleBackColor = true;
+            // 
+            // saveTable
+            // 
+            this.saveTable.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.saveTable.Location = new System.Drawing.Point(6, 6);
+            this.saveTable.Name = "saveTable";
+            this.saveTable.Size = new System.Drawing.Size(295, 300);
+            this.saveTable.TabIndex = 0;
+            this.saveTable.UseCompatibleStateImageBehavior = false;
+            this.saveTable.View = System.Windows.Forms.View.Details;
             // 
             // MainView
             // 

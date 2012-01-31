@@ -5,6 +5,7 @@ using System.Text;
 using System.Drawing;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using emuLib.Libraries;
 
 namespace emuLib
 {
@@ -20,54 +21,46 @@ namespace emuLib
 
         internal static void loadSettings()
         {
-            string filename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "emuLib", "settings.dat");
-            string filename2 = "settings.dat";
+            string filename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "emuLib", "settings.ini");
+            string filename2 = ".\\settings.ini";
 
             if (File.Exists(filename2))
             {
-                Stream stream = File.Open(filename2, FileMode.Open);
-                BinaryFormatter bFormatter = new BinaryFormatter();
-                bsnesLocation = (string)bFormatter.Deserialize(stream);
-                snesXmlLocation = (string)bFormatter.Deserialize(stream);
-                snesRomLocation = (string)bFormatter.Deserialize(stream);
-                stream.Close();
+                INIFile ini = new INIFile(filename2);
+                bsnesLocation = ini.IniReadValue("settings", "bsnes");
+                snesXmlLocation = ini.IniReadValue("settings", "xml");
+                snesRomLocation = ini.IniReadValue("settings", "roms");
             }
             else if (File.Exists(filename))
             {
-                Stream stream = File.Open(filename, FileMode.Open);
-                BinaryFormatter bFormatter = new BinaryFormatter();
-                bsnesLocation = (string)bFormatter.Deserialize(stream);
-                snesXmlLocation = (string)bFormatter.Deserialize(stream);
-                snesRomLocation = (string)bFormatter.Deserialize(stream);
-                stream.Close();
+                INIFile ini = new INIFile(filename);
+                bsnesLocation = ini.IniReadValue("settings", "bsnes");
+                snesXmlLocation = ini.IniReadValue("settings", "xml");
+                snesRomLocation = ini.IniReadValue("settings", "roms");
             }
         }
 
         internal static void saveSettings()
         {
             string dirname = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "emuLib");
-            string filename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "emuLib", "settings.dat");
-            string filename2 = "settings.dat";
+            string filename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "emuLib", "settings.ini");
+            string filename2 = ".\\settings.ini";
 
             if (File.Exists(filename2))
             {
-                Stream stream = File.Open(filename, FileMode.Create);
-                BinaryFormatter bFormatter = new BinaryFormatter();
-                bFormatter.Serialize(stream, bsnesLocation);
-                bFormatter.Serialize(stream, snesXmlLocation);
-                bFormatter.Serialize(stream, snesRomLocation);
-                stream.Close();
+                INIFile ini = new INIFile(filename2);
+                ini.IniWriteValue("settings", "bsnes", bsnesLocation);
+                ini.IniWriteValue("settings", "xml", snesXmlLocation);
+                ini.IniWriteValue("settings", "roms", snesRomLocation);
             }
             else
             {
                 if (!Directory.Exists(dirname))
                     Directory.CreateDirectory(dirname);
-                Stream stream = File.Open(filename, FileMode.Create);
-                BinaryFormatter bFormatter = new BinaryFormatter();
-                bFormatter.Serialize(stream, bsnesLocation);
-                bFormatter.Serialize(stream, snesXmlLocation);
-                bFormatter.Serialize(stream, snesRomLocation);
-                stream.Close();
+                INIFile ini = new INIFile(filename);
+                ini.IniWriteValue("settings", "bsnes", bsnesLocation);
+                ini.IniWriteValue("settings", "xml", snesXmlLocation);
+                ini.IniWriteValue("settings", "roms", snesRomLocation);
             }
         }
     }

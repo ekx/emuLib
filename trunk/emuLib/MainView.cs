@@ -110,7 +110,18 @@ namespace emuLib
 
         private void searchBox_TextChanged(object sender, EventArgs e)
         {
-            libTable.ModelFilter = TextMatchFilter.Contains(this.libTable, searchBox.Text);
+            if (searchBox.Text.Length > 1)
+            {
+                TextMatchFilter filter = TextMatchFilter.Contains(this.libTable, searchBox.Text);
+                libTable.ModelFilter = filter;
+                libTable.DefaultRenderer = new HighlightTextRenderer(filter);
+            }
+            else
+            {
+                TextMatchFilter filter = null;
+                libTable.ModelFilter = filter;
+                libTable.DefaultRenderer = new HighlightTextRenderer(filter);
+            }
         }
 
         private void aboutMenuItem_Click(object sender, EventArgs e)
@@ -150,7 +161,7 @@ namespace emuLib
 
         private void startGame()
         {
-            ProcessStartInfo startInfo = new ProcessStartInfo();        
+            ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.FileName = Repo.bsnesLocation;
             startInfo.Arguments = "\"" + Repo.snesLib.getRomPath(sel.name) + "\"";
             Process.Start(startInfo);
