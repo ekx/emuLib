@@ -63,5 +63,46 @@ namespace emuLib
                 ini.IniWriteValue("settings", "roms", snesRomLocation);
             }
         }
+
+        public static void saveSelectedView(string type)
+        {
+            string dirname = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "emuLib");
+            string filename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "emuLib", "settings.ini");
+            string filename2 = ".\\settings.ini";
+
+            if (File.Exists(filename2))
+            {
+                INIFile ini = new INIFile(filename2);
+                ini.IniWriteValue("settings", "view", type);
+            }
+            else
+            {
+                if (!Directory.Exists(dirname))
+                    Directory.CreateDirectory(dirname);
+                INIFile ini = new INIFile(filename);
+                ini.IniWriteValue("settings", "view", type);
+            }
+        }
+
+        public static string loadSelectedView()
+        {
+            string res = null;
+
+            string filename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "emuLib", "settings.ini");
+            string filename2 = ".\\settings.ini";
+
+            if (File.Exists(filename2))
+            {
+                INIFile ini = new INIFile(filename2);
+                res = ini.IniReadValue("settings", "view");
+            }
+            else if (File.Exists(filename))
+            {
+                INIFile ini = new INIFile(filename);
+                res = ini.IniReadValue("settings", "view");
+            }
+
+            return res;
+        }
     }
 }

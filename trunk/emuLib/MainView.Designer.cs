@@ -65,6 +65,7 @@
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.loadButton = new System.Windows.Forms.Button();
             this.saveTable = new BrightIdeasSoftware.ObjectListView();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.libTable)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.menuStrip.SuspendLayout();
@@ -214,6 +215,8 @@
             // 
             // fileMenu
             // 
+            this.fileMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exitToolStripMenuItem});
             this.fileMenu.Name = "fileMenu";
             this.fileMenu.Size = new System.Drawing.Size(37, 23);
             this.fileMenu.Text = "File";
@@ -448,6 +451,13 @@
             this.saveTable.UseCompatibleStateImageBehavior = false;
             this.saveTable.View = System.Windows.Forms.View.Details;
             // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -525,6 +535,7 @@
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.Button loadButton;
         private BrightIdeasSoftware.ObjectListView saveTable;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
     }
 }
 

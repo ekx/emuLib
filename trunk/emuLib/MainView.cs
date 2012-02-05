@@ -32,6 +32,7 @@ namespace emuLib
             Repo.loadSettings();
 
             loadSnesLibrary();
+            setSelectedView(Repo.loadSelectedView());
         }
 
         public void loadSnesLibrary()
@@ -79,33 +80,58 @@ namespace emuLib
 
         private void detailsMenuItem_Click(object sender, EventArgs e)
         {
-            detailsMenuItem.Checked = true;
-            detailsGroupedMenuItem.Checked = false;
-            largeIconsMenuItem.Checked = false;
-
-            libTable.View = View.Details;
-            libTable.ShowGroups = false;
+            setSelectedView("details");
         }
 
         private void detailsGroupedMenuItem_Click(object sender, EventArgs e)
         {
-            detailsMenuItem.Checked = false;
-            detailsGroupedMenuItem.Checked = true;
-            largeIconsMenuItem.Checked = false;
-
-            libTable.View = View.Details;
-            libTable.ShowGroups = true;
-            libTable.Sort(0);
+            setSelectedView("grouped");
         }
 
         private void largeIconsMenuItem_Click(object sender, EventArgs e)
         {
-            detailsMenuItem.Checked = false;
-            detailsGroupedMenuItem.Checked = false;
-            largeIconsMenuItem.Checked = true;
+            setSelectedView("icons");
+        }
 
-            libTable.View = View.LargeIcon;
-            libTable.ShowGroups = false;
+        private void setSelectedView(string type)
+        {
+            if (type == null)
+                return;
+
+            if (type.Equals("details"))
+            {
+                detailsMenuItem.Checked = true;
+                detailsGroupedMenuItem.Checked = false;
+                largeIconsMenuItem.Checked = false;
+
+                libTable.View = View.Details;
+                libTable.ShowGroups = false;
+
+                Repo.saveSelectedView("details");
+            }
+            else if (type.Equals("grouped"))
+            {
+                detailsMenuItem.Checked = false;
+                detailsGroupedMenuItem.Checked = true;
+                largeIconsMenuItem.Checked = false;
+
+                libTable.View = View.Details;
+                libTable.ShowGroups = true;
+                libTable.Sort(0);
+
+                Repo.saveSelectedView("grouped");
+            }
+            else if (type.Equals("icons"))
+            {
+                detailsMenuItem.Checked = false;
+                detailsGroupedMenuItem.Checked = false;
+                largeIconsMenuItem.Checked = true;
+
+                libTable.View = View.LargeIcon;
+                libTable.ShowGroups = false;
+
+                Repo.saveSelectedView("icons");
+            }
         }
 
         private void searchBox_TextChanged(object sender, EventArgs e)
@@ -134,6 +160,11 @@ namespace emuLib
         {
             PreferencesDialog pd = new PreferencesDialog(this);
             pd.Show();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         private void readManualLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
