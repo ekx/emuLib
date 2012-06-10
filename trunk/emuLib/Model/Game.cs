@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace emuLib
 {
-    class Game
+    [Serializable()]
+    class Game : ISerializable
     {
         public string name { get; set; }
         public uint crc { get; set; }
@@ -17,6 +19,26 @@ namespace emuLib
         public Game()
         {
 
+        }
+
+        public Game(SerializationInfo info, StreamingContext ctxt)
+        {
+            this.name = info.GetString("Name");
+            this.crc = info.GetUInt32("CRC");
+            this.manufacturer = info.GetString("Manufacturer");
+            this.year = info.GetUInt32("Year");
+            this.genre = info.GetString("Genre");
+            this.hasManual = info.GetBoolean("HasManual");
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
+        {
+            info.AddValue("Name", this.name);
+            info.AddValue("CRC", this.crc);
+            info.AddValue("Manufacturer", this.manufacturer);
+            info.AddValue("Year", this.year);
+            info.AddValue("Genre", this.genre);
+            info.AddValue("HasManual", this.hasManual);
         }
 
         public Game(string name)

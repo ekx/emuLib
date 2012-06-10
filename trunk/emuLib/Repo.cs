@@ -11,13 +11,29 @@ namespace emuLib
 {
     static class Repo
     {
+        public static readonly string FILENAME = "snes.lib";
+
         public static GameLib snesLib { get; set; }     
         public static Size smallIconSize { get { return new Size(64, 53); } }
         public static Size largeIconSize { get { return new Size(128, 106); } }
 
         public static string bsnesLocation { get; set; }
-        public static string snesXmlLocation { get; set; }
-        public static string snesRomLocation { get; set; }
+
+        internal static void serializeGameLib()
+        {
+            Stream stream = File.Open(FILENAME, FileMode.Create);
+            BinaryFormatter bFormatter = new BinaryFormatter();
+            bFormatter.Serialize(stream, snesLib);
+            stream.Close();
+        }
+
+        internal static void deserializeGameLib()
+        {
+            Stream stream = File.Open(FILENAME, FileMode.Open);
+            BinaryFormatter bFormatter = new BinaryFormatter();
+            snesLib = (GameLib)bFormatter.Deserialize(stream);
+            stream.Close();
+        }
 
         internal static void loadSettings()
         {
@@ -28,15 +44,11 @@ namespace emuLib
             {
                 INIFile ini = new INIFile(filename2);
                 bsnesLocation = ini.IniReadValue("settings", "bsnes");
-                snesXmlLocation = ini.IniReadValue("settings", "xml");
-                snesRomLocation = ini.IniReadValue("settings", "roms");
             }
             else if (File.Exists(filename))
             {
                 INIFile ini = new INIFile(filename);
                 bsnesLocation = ini.IniReadValue("settings", "bsnes");
-                snesXmlLocation = ini.IniReadValue("settings", "xml");
-                snesRomLocation = ini.IniReadValue("settings", "roms");
             }
         }
 
@@ -50,8 +62,6 @@ namespace emuLib
             {
                 INIFile ini = new INIFile(filename2);
                 ini.IniWriteValue("settings", "bsnes", bsnesLocation);
-                ini.IniWriteValue("settings", "xml", snesXmlLocation);
-                ini.IniWriteValue("settings", "roms", snesRomLocation);
             }
             else
             {
@@ -59,8 +69,6 @@ namespace emuLib
                     Directory.CreateDirectory(dirname);
                 INIFile ini = new INIFile(filename);
                 ini.IniWriteValue("settings", "bsnes", bsnesLocation);
-                ini.IniWriteValue("settings", "xml", snesXmlLocation);
-                ini.IniWriteValue("settings", "roms", snesRomLocation);
             }
         }
 

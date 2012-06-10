@@ -43,6 +43,8 @@
             this.gamesCountLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.createLibraryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,7 +67,9 @@
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.loadButton = new System.Windows.Forms.Button();
             this.saveTable = new BrightIdeasSoftware.ObjectListView();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nrColumn = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.nColumn = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.dateColumn = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             ((System.ComponentModel.ISupportInitialize)(this.libTable)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.menuStrip.SuspendLayout();
@@ -86,9 +90,9 @@
             this.libTable.AllColumns.Add(this.genreColumn);
             this.libTable.AllColumns.Add(this.manColumn);
             this.libTable.AllColumns.Add(this.yearColumn);
-            this.libTable.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.libTable.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.libTable.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.nameColumn,
             this.genreColumn,
@@ -216,10 +220,25 @@
             // fileMenu
             // 
             this.fileMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createLibraryToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileMenu.Name = "fileMenu";
             this.fileMenu.Size = new System.Drawing.Size(37, 23);
             this.fileMenu.Text = "File";
+            // 
+            // createLibraryToolStripMenuItem
+            // 
+            this.createLibraryToolStripMenuItem.Name = "createLibraryToolStripMenuItem";
+            this.createLibraryToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.createLibraryToolStripMenuItem.Text = "Create Library";
+            this.createLibraryToolStripMenuItem.Click += new System.EventHandler(this.createLibraryToolStripMenuItem_Click);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // editMenu
             // 
@@ -380,8 +399,8 @@
             // 
             // tabControl2
             // 
-            this.tabControl2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl2.Controls.Add(this.tabPage3);
             this.tabControl2.Controls.Add(this.tabPage4);
             this.tabControl2.Location = new System.Drawing.Point(934, 380);
@@ -404,8 +423,8 @@
             // 
             // descriptionBox
             // 
-            this.descriptionBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.descriptionBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.descriptionBox.BackColor = System.Drawing.SystemColors.Window;
             this.descriptionBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.descriptionBox.Location = new System.Drawing.Point(6, 6);
@@ -430,33 +449,63 @@
             // 
             // loadButton
             // 
-            this.loadButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.loadButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.loadButton.Enabled = false;
             this.loadButton.Location = new System.Drawing.Point(6, 312);
             this.loadButton.Name = "loadButton";
             this.loadButton.Size = new System.Drawing.Size(295, 23);
             this.loadButton.TabIndex = 1;
             this.loadButton.Text = "Load";
             this.loadButton.UseVisualStyleBackColor = true;
+            this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
             // 
             // saveTable
             // 
-            this.saveTable.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.saveTable.AllColumns.Add(this.nrColumn);
+            this.saveTable.AllColumns.Add(this.nColumn);
+            this.saveTable.AllColumns.Add(this.dateColumn);
+            this.saveTable.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.saveTable.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.nrColumn,
+            this.nColumn,
+            this.dateColumn});
+            this.saveTable.FullRowSelect = true;
             this.saveTable.Location = new System.Drawing.Point(6, 6);
+            this.saveTable.MultiSelect = false;
             this.saveTable.Name = "saveTable";
+            this.saveTable.OwnerDraw = true;
             this.saveTable.Size = new System.Drawing.Size(295, 300);
             this.saveTable.TabIndex = 0;
             this.saveTable.UseCompatibleStateImageBehavior = false;
+            this.saveTable.UseFiltering = true;
             this.saveTable.View = System.Windows.Forms.View.Details;
             // 
-            // exitToolStripMenuItem
+            // nrColumn
             // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.nrColumn.AspectName = "nr";
+            this.nrColumn.MaximumWidth = 20;
+            this.nrColumn.MinimumWidth = 20;
+            this.nrColumn.Text = "#";
+            this.nrColumn.Width = 20;
+            // 
+            // nColumn
+            // 
+            this.nColumn.AspectName = "savename";
+            this.nColumn.AspectToStringFormat = "";
+            this.nColumn.FillsFreeSpace = true;
+            this.nColumn.Text = "Name";
+            this.nColumn.Width = 140;
+            // 
+            // dateColumn
+            // 
+            this.dateColumn.AspectName = "date";
+            this.dateColumn.MaximumWidth = 110;
+            this.dateColumn.MinimumWidth = 110;
+            this.dateColumn.Text = "Date";
+            this.dateColumn.Width = 110;
             // 
             // MainView
             // 
@@ -536,6 +585,10 @@
         private System.Windows.Forms.Button loadButton;
         private BrightIdeasSoftware.ObjectListView saveTable;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private BrightIdeasSoftware.OLVColumn nColumn;
+        private BrightIdeasSoftware.OLVColumn dateColumn;
+        private System.Windows.Forms.ToolStripMenuItem createLibraryToolStripMenuItem;
+        private BrightIdeasSoftware.OLVColumn nrColumn;
     }
 }
 

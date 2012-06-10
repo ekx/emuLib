@@ -11,17 +11,11 @@ namespace emuLib.Forms
 {
     public partial class PreferencesDialog : Form
     {
-        private MainView parent;
-
-        public PreferencesDialog(MainView parent)
+        public PreferencesDialog()
         {
             InitializeComponent();
 
-            this.parent = parent;
-
             bsnesPathInput.Text = Repo.bsnesLocation;
-            snesXmlPathInput.Text = Repo.snesXmlLocation;
-            snesRomPathInput.Text = Repo.snesRomLocation;
         }
 
         private void selectBsnesButton_Click(object sender, EventArgs e)
@@ -35,38 +29,11 @@ namespace emuLib.Forms
             }
         }
 
-        private void selectSnesXmlButton_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*";
-            dialog.Title = "Please select a XML-File that contains a SNES ROM Library";
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                snesXmlPathInput.Text = dialog.FileName;
-            }
-        }
-
-        private void selectSnesRomButton_Click(object sender, EventArgs e)
-        {
-            FolderBrowserDialog dialog = new FolderBrowserDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                snesRomPathInput.Text = dialog.SelectedPath;
-            }
-        }
-
         private void okButton_Click(object sender, EventArgs e)
         {
-            if (!snesRomPathInput.Text.EndsWith("\\"))
-                snesRomPathInput.Text += "\\";
-
             Repo.bsnesLocation = bsnesPathInput.Text;
-            Repo.snesXmlLocation = snesXmlPathInput.Text;
-            Repo.snesRomLocation = snesRomPathInput.Text;
 
             Repo.saveSettings();
-
-            parent.loadSnesLibrary();
 
             this.Close();
         }

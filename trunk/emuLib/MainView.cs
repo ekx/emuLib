@@ -10,6 +10,7 @@ using System.IO;
 using BrightIdeasSoftware;
 using emuLib.Forms;
 using System.Diagnostics;
+using emuLib.Model;
 
 namespace emuLib
 {
@@ -20,6 +21,7 @@ namespace emuLib
         public MainView()
         {
             InitializeComponent();
+            initializeListViews();
 
             Win32Utility.SetCueText(searchBox.TextBox, " Search Games");
 
@@ -35,17 +37,54 @@ namespace emuLib
             setSelectedView(Repo.loadSelectedView());
         }
 
+        private void initializeListViews()
+        {
+            this.nameColumn.ImageGetter = delegate(object row)
+            {
+                Game g = (Game)row;
+                return g.name;
+            };
+
+            this.nColumn.GroupKeyGetter = delegate(object row)
+            {
+                Save s = (Save)row;
+                if (s.type == SaveType.Normal)
+                    return "Normal";
+                if (s.type == SaveType.StateManager)
+                    return "State Manager";
+
+                return "Normal";
+            };
+
+            this.nrColumn.GroupKeyGetter = delegate(object row)
+            {
+                Save s = (Save)row;
+                if (s.type == SaveType.Normal)
+                    return "Normal";
+                if (s.type == SaveType.StateManager)
+                    return "State Manager";
+
+                return "Normal";
+            };
+
+            this.dateColumn.GroupKeyGetter = delegate(object row)
+            {
+                Save s = (Save)row;
+                if (s.type == SaveType.Normal)
+                    return "Normal";
+                if (s.type == SaveType.StateManager)
+                    return "State Manager";
+
+                return "Normal";
+            };
+        }
+
         public void loadSnesLibrary()
         {
-            if (Repo.snesRomLocation != null && Repo.snesXmlLocation != null)
+            if (File.Exists(Repo.FILENAME))
             {
-                Repo.snesLib = new GameLib("SNES", Repo.snesRomLocation, Repo.snesXmlLocation);
-
-                this.nameColumn.ImageGetter = delegate(object row)
-                {
-                    Game g = (Game)row;
-                    return g.name;
-                };
+                if(Repo.snesLib == null)
+                    Repo.deserializeGameLib();
 
                 detailsMenuItem.Checked = true;
                 libTable.LargeImageList = Repo.snesLib.getBoxArt();
@@ -70,6 +109,8 @@ namespace emuLib
                 genreLabel.Text = "Genre: " + sel.genre;
 
                 descriptionBox.Text = Repo.snesLib.getDescription(sel.name);
+
+                saveTable.SetObjects(Repo.snesLib.getSaveList(sel.name));
             }
         }
 
@@ -158,13 +199,19 @@ namespace emuLib
 
         private void preferencesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            PreferencesDialog pd = new PreferencesDialog(this);
+            PreferencesDialog pd = new PreferencesDialog();
             pd.Show();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void createLibraryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CreateLibraryDialog cld = new CreateLibraryDialog(this);
+            cld.Show();
         }
 
         private void readManualLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -195,6 +242,15 @@ namespace emuLib
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.FileName = Repo.bsnesLocation;
             startInfo.Arguments = "\"" + Repo.snesLib.getRomPath(sel.name) + "\"";
+            Process.Start(startInfo);
+        }
+
+        private void loadButton_Click(object sender, EventArgs e)
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.FileName = Repo.bsnesLocation;
+            Save temp = (Save)saveTable.SelectedObject;
+            startInfo.Arguments = "\"" + Repo.snesLib.getRomPath(sel.name) + "\"" + temp.filename + "\"";
             Process.Start(startInfo);
         }
     }
